@@ -269,7 +269,7 @@
           </div>
         </div>
 
-        <div class="col-xl-6">
+        <div class="col-xl-12">
 
           <div class="card">
             <div class="card-body">
@@ -298,24 +298,84 @@
                     <tbody>
                       <tr>
                         <td>Grammi</td>
-                        <td>Test</td>
-                        <td>Test</td>
-                        <td>Test</td>
-                        <td>Test</td>
+                        <td>
+                          <?php
+                            $gr_carbo = number_format(($qta_carne_1 * 0.0) + ($tuberi_1 * 0.17) + ($verdure_1 * 0.024), 1);
+                            echo $gr_carbo;
+                          ?>
+                        </td>
+                        <td>
+                          <?php
+                            $gr_prote = number_format(($qta_carne_1 * 0.16) + ($tuberi_1 * 0.02) + ($verdure_1 * 0.023), 1);
+                            echo $gr_prote;
+                          ?>
+                        </td>
+                        <td>
+                          <?php
+                            $gr_grassi = number_format(($qta_carne_1 * 0.20) + ($tuberi_1 * 0.001) + ($verdure_1 * 0.002), 1);
+                            echo $gr_grassi;
+                          ?>
+                        </td>
+                        <td>
+                          <?php echo $gr_carbo + $gr_prote + $gr_grassi ?>
+                        </td>
                       </tr>
                       <tr>
                         <td>Calorie</td>
-                        <td>Test</td>
-                        <td>Test</td>
-                        <td>Test</td>
-                        <td>Test</td>
+                        <td>
+                          <?php
+                            $calorie_carbo = $gr_carbo * 3.5;
+                            echo $calorie_carbo;
+                          ?>
+                        </td>
+                        <td>
+                          <?php
+                            $calorie_prote = $gr_prote * 3.5;
+                            echo $calorie_prote;
+                          ?>
+                        </td>
+                        <td>
+                          <?php
+                            $calorie_grassi = $gr_grassi * 8.5;
+                            echo $calorie_grassi;
+                          ?>
+                        </td>
+                        <td>
+                        <?php
+                          $totale_calorie = $calorie_carbo + $calorie_prote + $calorie_grassi;
+                          echo $totale_calorie;
+                        ?>
+                        </td>
                       </tr>
                       <tr>
                         <td>%</td>
-                        <td>Test</td>
-                        <td>Test</td>
-                        <td>Test</td>
-                        <td>Test</td>
+                        <td>
+                          <?php
+                            $perc_carbo = number_format(($calorie_carbo / $totale_calorie) * 100, 1);
+                            echo $perc_carbo;
+                          ?>
+                        </td>
+                        <td>
+                          <?php
+                            $perc_prote = number_format(($calorie_prote / $totale_calorie) * 100, 1);
+                            echo $perc_prote;
+                          ?>
+                        </td>
+                        <td>
+                          <?php
+                            $perc_grassi = number_format(($calorie_grassi / $totale_calorie) * 100, 1);
+                            echo $perc_grassi;
+                          ?>
+                        </td>
+                        <td>
+                          <?php
+                            if ($perc_carbo + $perc_prote + $perc_grassi >= 99) {
+                              echo 100;
+                            } else {
+                              echo $perc_carbo + $perc_prote + $perc_grassi;
+                            }
+                          ?>
+                        </td>
                       </tr>
                     </tbody>
                   </table>
@@ -324,7 +384,8 @@
                     <thead>
                       <tr>
                         <th scope="col">Alimento</th>
-                        <th scope="col">Quantit&agrave;</th>
+                        <th scope="col">Qta Generata dopo Variazione</th>
+                        <th scope="col">Qta Generata dalla Dieta</th>
                         <th scope="col">Carboidrati</th>
                         <th scope="col">Proteine</th>
                         <th scope="col">Grassi</th>
@@ -333,6 +394,7 @@
                     <tbody>
                       <tr>
                         <td>Carne (gr)</td>
+                        <td>TBD</td>
                         <td class="fw-bold">
                           <?php echo intval($qta_carne_1); ?>
                         </td>
@@ -342,6 +404,7 @@
                       </tr>
                       <tr>
                         <td>Tuberi (gr)</td>
+                        <td>TBD</td>
                         <td class="fw-bold">
                           <?php echo intval($tuberi_1); ?>
                         </td>
@@ -351,6 +414,7 @@
                       </tr>
                       <tr>
                         <td>Verdure (gr)</td>
+                        <td>TBD</td>
                         <td class="fw-bold">
                           <?php echo intval($verdure_1); ?>
                         </td>
@@ -361,36 +425,7 @@
                     </tbody>
                   </table>
 
-                  <br/>
-
-                  <nav>
-                    <ol class="breadcrumb">
-                      <li class="breadcrumb-item">Leggi sotto per gli alimenti completi</li>
-                    </ol>
-                  </nav>
-
-                </div>
-
-              </div><!-- End Bordered Tabs -->
-
-            </div>
-          </div>
-
-        </div>
-
-        <div class="col-xl-6">
-
-          <div class="card">
-            <div class="card-body">
-              <div class="tab-content pt-1">
-
-                <div class="tab-pane fade show active profile-overview" id="profile-overview">
-
-                  <h5 class="card-title">Dieta Due</h5>
-
-                  <?php
-                    $basmati_2 = $tuberi_1 / 4;
-                  ?>
+                  <h5>Variazioni Percentuali</h5>
 
                   <table class="table">
                     <thead>
@@ -404,276 +439,58 @@
                     </thead>
                     <tbody>
                       <tr>
-                        <td>Grammi</td>
-                        <td>Test</td>
-                        <td>Test</td>
-                        <td>Test</td>
-                        <td>Test</td>
-                      </tr>
-                      <tr>
-                        <td>Calorie</td>
-                        <td>Test</td>
-                        <td>Test</td>
-                        <td>Test</td>
-                        <td>Test</td>
-                      </tr>
-                      <tr>
-                        <td>%</td>
-                        <td>Test</td>
-                        <td>Test</td>
-                        <td>Test</td>
-                        <td>Test</td>
-                      </tr>
-                    </tbody>
-                  </table>
-
-                  <table class="table table-borderless">
-                    <thead>
-                      <tr>
-                        <th scope="col">Alimento</th>
-                        <th scope="col">Quantit&agrave;</th>
-                        <th scope="col">Carboidrati</th>
-                        <th scope="col">Proteine</th>
-                        <th scope="col">Grassi</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>Riso Basmati (gr)</td>
-                        <td class="fw-bold">
-                          <?php echo intval($basmati_2); ?>
+                        <td class="fw-bold">Variazioni %</td>
+                        <td>
+                          <input type='number' min=0 max=10000 value=50 id='var_carbo' onChange='updateResults()' />
                         </td>
-                        <td>28%</td>
-                        <td>3,5%</td>
-                        <td>0,4%</td>
-                      </tr>
-                      <tr>
-                        <td>Carne (gr)</td>
-                        <td class="fw-bold">
-                          <?php echo intval($qta_carne_1); ?>
+                        <td>
+                          <input type='number' min=0 max=10000 value=20 id='var_prote' onChange='updateResults()' />
                         </td>
-                        <td>0%</td>
-                        <td>16%</td>
-                        <td>20%</td>
-                      </tr>
-                      <tr>
-                        <td>Verdure (gr)</td>
-                        <td class="fw-bold">
-                          <?php echo intval($verdure_1); ?>
+                        <td>
+                          <input type='number' min=0 max=10000 value=46 id='var_grassi' disabled />
                         </td>
-                        <td>2,4%</td>
-                        <td>2,3%</td>
-                        <td>0,2%</td>
-                      </tr>
-                    </tbody>
-                  </table>
-
-                  <br/>
-
-                  <nav>
-                    <ol class="breadcrumb">
-                      <li class="breadcrumb-item">Leggi sotto per gli alimenti completi</li>
-                    </ol>
-                  </nav>
-
-                </div>
-
-              </div><!-- End Bordered Tabs -->
-
-            </div>
-          </div>
-
-        </div>
-
-        <div class="col-xl-6">
-
-          <div class="card">
-            <div class="card-body">
-              <div class="tab-content pt-1">
-
-                <div class="tab-pane fade show active profile-overview" id="profile-overview">
-
-                  <h5 class="card-title">Dieta Tre</h5>
-
-                  <?php
-                    $qta_carne_bianca_3 = ($dog_tab_result['daily_kcal'] / 200) * 100;
-                  ?>
-
-                  <table class="table">
-                    <thead>
-                      <tr>
-                        <th scope="col"></th>
-                        <th scope="col">Carboidrati</th>
-                        <th scope="col">Proteine</th>
-                        <th scope="col">Grassi</th>
-                        <th scope="col">Totale</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>Grammi</td>
-                        <td>Test</td>
-                        <td>Test</td>
-                        <td>Test</td>
-                        <td>Test</td>
-                      </tr>
-                      <tr>
-                        <td>Calorie</td>
-                        <td>Test</td>
-                        <td>Test</td>
-                        <td>Test</td>
-                        <td>Test</td>
-                      </tr>
-                      <tr>
-                        <td>%</td>
-                        <td>Test</td>
-                        <td>Test</td>
-                        <td>Test</td>
-                        <td>Test</td>
-                      </tr>
-                    </tbody>
-                  </table>
-
-                  <table class="table table-borderless">
-                    <thead>
-                      <tr>
-                        <th scope="col">Alimento</th>
-                        <th scope="col">Quantit&agrave;</th>
-                        <th scope="col">Carboidrati</th>
-                        <th scope="col">Proteine</th>
-                        <th scope="col">Grassi</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>Carne Bianca (gr)</td>
-                        <td class="fw-bold">
-                          <?php echo intval($qta_carne_bianca_3); ?>
+                        <td>
+                          <input type='number' min=0 max=10000 value=100 id='var_totale' disabled />
                         </td>
-                        <td>0%</td>
-                        <td>22%</td>
-                        <td>2,5%</td>
                       </tr>
                       <tr>
-                        <td>Tuberi (gr)</td>
-                        <td class="fw-bold">
-                          <?php echo intval($tuberi_1); ?>
+                        <td class="fw-bold">Calorie</td>
+                        <td>
+                          <input min=0 max=10000 type='number' id='var_calo_carbo' disabled />
                         </td>
-                        <td>17%</td>
-                        <td>2%</td>
-                        <td>0,1%</td>
-                      </tr>
-                      <tr>
-                        <td>Verdure (gr)</td>
-                        <td class="fw-bold">
-                          <?php echo intval($verdure_1); ?>
+                        <td>
+                          <input min=0 max=10000 type='number' id='var_calo_prote' disabled />
                         </td>
-                        <td>2,4%</td>
-                        <td>2,3%</td>
-                        <td>0,2%</td>
-                      </tr>
-                    </tbody>
-                  </table>
-
-                  <br/>
-
-                  <nav>
-                    <ol class="breadcrumb">
-                      <li class="breadcrumb-item">Leggi sotto per gli alimenti completi</li>
-                    </ol>
-                  </nav>
-
-                </div>
-
-              </div><!-- End Bordered Tabs -->
-
-            </div>
-          </div>
-
-        </div>
-
-        <div class="col-xl-6">
-
-          <div class="card">
-            <div class="card-body">
-              <div class="tab-content pt-1">
-
-                <div class="tab-pane fade show active profile-overview" id="profile-overview">
-
-                  <h5 class="card-title">Dieta Quattro</h5>
-
-                  <table class="table">
-                    <thead>
-                      <tr>
-                        <th scope="col"></th>
-                        <th scope="col">Carboidrati</th>
-                        <th scope="col">Proteine</th>
-                        <th scope="col">Grassi</th>
-                        <th scope="col">Totale</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>Grammi</td>
-                        <td>Test</td>
-                        <td>Test</td>
-                        <td>Test</td>
-                        <td>Test</td>
-                      </tr>
-                      <tr>
-                        <td>Calorie</td>
-                        <td>Test</td>
-                        <td>Test</td>
-                        <td>Test</td>
-                        <td>Test</td>
-                      </tr>
-                      <tr>
-                        <td>%</td>
-                        <td>Test</td>
-                        <td>Test</td>
-                        <td>Test</td>
-                        <td>Test</td>
-                      </tr>
-                    </tbody>
-                  </table>
-
-                  <table class="table table-borderless">
-                    <thead>
-                      <tr>
-                        <th scope="col">Alimento</th>
-                        <th scope="col">Quantit&agrave;</th>
-                        <th scope="col">Carboidrati</th>
-                        <th scope="col">Proteine</th>
-                        <th scope="col">Grassi</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>Carne Bianca / Pesce (gr)</td>
-                        <td class="fw-bold">
-                          <?php echo intval($qta_carne_bianca_3); ?>
+                        <td>
+                          <input min=0 max=10000 type='number' id='var_calo_grassi' disabled />
                         </td>
-                        <td>0%</td>
-                        <td>22%</td>
-                        <td>2,5%</td>
+                        <td>
+                          <input min=0 max=10000 type='number' id='var_calo_totale' disabled />
+                        </td>
                       </tr>
                       <tr>
-                        <td>Tuberi (gr)</td>
-                        <td class="fw-bold">
-                          <?php echo intval($tuberi_1); ?>
+                        <td class="fw-bold">Grammi</td>
+                        <td>
+                          <input min=0 max=10000 type='number' id='var_grammi_carbo' disabled />
                         </td>
-                        <td>17%</td>
-                        <td>2%</td>
-                        <td>0,1%</td>
+                        <td>
+                          <input min=0 max=10000 type='number' id='var_grammi_prote' disabled />
+                        </td>
+                        <td>
+                          <input min=0 max=10000 type='number' id='var_grammi_grassi' disabled />
+                        </td>
+                        <td></td>
                       </tr>
                       <tr>
-                        <td>Verdure (gr)</td>
-                        <td class="fw-bold">
-                          <?php echo intval($verdure_1); ?>
+                        <td class="fw-bold">Grammi Nutrienti</td>
+                        <td>
+                          <input min=0 max=10000 type='number' id='var_grammi_nutri_carbo' disabled />
                         </td>
-                        <td>2,4%</td>
-                        <td>2,3%</td>
-                        <td>0,2%</td>
+                        <td>
+                          <input min=0 max=10000 type='number' id='var_grammi_nutri_prote' disabled />
+                        </td>
+                        <td></td>
+                        <td></td>
                       </tr>
                     </tbody>
                   </table>
@@ -855,6 +672,55 @@
 
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
+
+  <script>
+    function updateResults() {
+      const var_carbo = document.getElementById("var_carbo").value;
+      const var_prote = document.getElementById("var_prote").value;
+
+      // PHP vals
+      const calorieCarbo = <?php echo json_encode($calorie_carbo); ?>;
+      const percCarbo = <?php echo json_encode($perc_carbo); ?>;
+
+      const calorieProte = <?php echo json_encode($calorie_prote); ?>;
+      const percProte = <?php echo json_encode($perc_prote); ?>;
+
+      // Results
+      const var_calo_carbo = var_carbo * (calorieCarbo / percCarbo);
+      const var_calo_prote = var_prote * (calorieProte / percProte);
+
+      const var_grammi_carbo = var_calo_carbo / 3.5;
+      const var_grammi_prote = var_calo_prote / 3.5;
+
+      const var_grammi_nutri_carbo = var_grammi_carbo / 0.17;
+      const var_grammi_nutri_prote = var_grammi_prote / 0.16;
+
+      const var_grammi_grassi = var_grammi_nutri_prote * 0.20;
+      const var_calo_grassi = var_grammi_grassi * 8.5;
+      const var_calo_totale = var_calo_carbo + var_calo_prote + var_calo_grassi;
+
+      const var_grassi = (var_calo_grassi / var_calo_totale) * 100;
+      const var_totale = Number.parseFloat(var_carbo) + Number.parseFloat(var_prote) + var_grassi;
+
+      // Update the disabled inputs
+      document.getElementById("var_calo_carbo").value = var_calo_carbo;
+      document.getElementById("var_calo_prote").value = var_calo_prote;
+
+      document.getElementById("var_grammi_carbo").value = var_grammi_carbo;
+      document.getElementById("var_grammi_prote").value = var_grammi_prote;
+
+      document.getElementById("var_grammi_nutri_carbo").value = var_grammi_nutri_carbo;
+      document.getElementById("var_grammi_nutri_prote").value = var_grammi_nutri_prote;
+
+      document.getElementById("var_grammi_grassi").value = var_grammi_grassi;
+      document.getElementById("var_calo_grassi").value = var_calo_grassi;
+
+      document.getElementById("var_calo_totale").value = var_calo_totale;
+
+      document.getElementById("var_grassi").value = var_grassi;
+      document.getElementById("var_totale").value = var_totale;
+    }
+  </script>
 
 </body>
 
