@@ -394,7 +394,9 @@
                     <tbody>
                       <tr>
                         <td>Carne (gr)</td>
-                        <td>TBD</td>
+                        <td>
+                          <input type='number' min=0 max=10000 id='qta_dopo_gen_carne' disabled />
+                        </td>
                         <td class="fw-bold">
                           <?php echo intval($qta_carne_1); ?>
                         </td>
@@ -404,7 +406,9 @@
                       </tr>
                       <tr>
                         <td>Tuberi (gr)</td>
-                        <td>TBD</td>
+                        <td>
+                          <input type='number' min=0 max=10000 id='qta_dopo_gen_tuberi' disabled />
+                        </td>
                         <td class="fw-bold">
                           <?php echo intval($tuberi_1); ?>
                         </td>
@@ -414,7 +418,9 @@
                       </tr>
                       <tr>
                         <td>Verdure (gr)</td>
-                        <td>TBD</td>
+                        <td>
+                          <input type='number' min=0 max=10000 id='qta_dopo_gen_verdure' disabled />
+                        </td>
                         <td class="fw-bold">
                           <?php echo intval($verdure_1); ?>
                         </td>
@@ -424,7 +430,8 @@
                       </tr>
                     </tbody>
                   </table>
-
+                  
+                  <br />
                   <h5>Variazioni Percentuali</h5>
 
                   <table class="table">
@@ -439,7 +446,7 @@
                     </thead>
                     <tbody>
                       <tr>
-                        <td class="fw-bold">Variazioni %</td>
+                        <td>Variazioni %</td>
                         <td>
                           <input type='number' min=0 max=10000 value=50 id='var_carbo' onChange='updateResults()' />
                         </td>
@@ -454,7 +461,7 @@
                         </td>
                       </tr>
                       <tr>
-                        <td class="fw-bold">Calorie</td>
+                        <td>Calorie</td>
                         <td>
                           <input min=0 max=10000 type='number' id='var_calo_carbo' disabled />
                         </td>
@@ -469,7 +476,7 @@
                         </td>
                       </tr>
                       <tr>
-                        <td class="fw-bold">Grammi</td>
+                        <td>Grammi</td>
                         <td>
                           <input min=0 max=10000 type='number' id='var_grammi_carbo' disabled />
                         </td>
@@ -479,10 +486,12 @@
                         <td>
                           <input min=0 max=10000 type='number' id='var_grammi_grassi' disabled />
                         </td>
-                        <td></td>
+                        <td>
+                          <input min=0 max=10000 type='number' id='var_grammi_totale' disabled />
+                        </td>
                       </tr>
                       <tr>
-                        <td class="fw-bold">Grammi Nutrienti</td>
+                        <td>Grammi Nutrienti</td>
                         <td>
                           <input min=0 max=10000 type='number' id='var_grammi_nutri_carbo' disabled />
                         </td>
@@ -490,6 +499,66 @@
                           <input min=0 max=10000 type='number' id='var_grammi_nutri_prote' disabled />
                         </td>
                         <td></td>
+                        <td></td>
+                      </tr>
+                    </tbody>
+                  </table>
+
+                  <br />
+                  <h5>Percentuali Nuova Dieta</h5>
+
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th scope="col"></th>
+                        <th scope="col">Carboidrati</th>
+                        <th scope="col">Proteine</th>
+                        <th scope="col">Grassi</th>
+                        <th scope="col">Totale</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>Grammi %</td>
+                        <td>
+                          <input type='number' min=0 max=10000 id='var_grammi_nuova_carbo' disabled />
+                        </td>
+                        <td>
+                          <input type='number' min=0 max=10000 id='var_grammi_nuova_prote' disabled />
+                        </td>
+                        <td>
+                          <input type='number' min=0 max=10000 id='var_grammi_nuova_grassi' disabled />
+                        </td>
+                        <td>
+                          <input type='number' min=0 max=10000 id='var_grammi_nuova_totale' disabled />
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Calorie</td>
+                        <td>
+                          <input type='number' min=0 max=10000 id='var_calorie_nuova_carbo' disabled />
+                        </td>
+                        <td>
+                          <input type='number' min=0 max=10000 id='var_calorie_nuova_prote' disabled />
+                        </td>
+                        <td>
+                          <input type='number' min=0 max=10000 id='var_calorie_nuova_grassi' disabled />
+                        </td>
+                        <td>
+                          <input type='number' min=0 max=10000 id='var_calorie_nuova_totale' disabled />
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>%</td>
+                        <td>
+                          <input type='number' min=0 max=10000 id='var_perc_nuova_carbo' disabled />
+                        </td>
+                        <td>
+                          <input type='number' min=0 max=10000 id='var_perc_nuova_prote' disabled />
+                        </td>
+                        <td>
+                          <input type='number' min=0 max=10000 id='var_perc_nuova_grassi' disabled />
+                        </td>
                         <td></td>
                       </tr>
                     </tbody>
@@ -696,30 +765,70 @@
       const var_grammi_nutri_prote = var_grammi_prote / 0.16;
 
       const var_grammi_grassi = var_grammi_nutri_prote * 0.20;
+      const var_grammi_totale = var_grammi_carbo + var_grammi_prote + var_grammi_grassi;
       const var_calo_grassi = var_grammi_grassi * 8.5;
       const var_calo_totale = var_calo_carbo + var_calo_prote + var_calo_grassi;
 
       const var_grassi = (var_calo_grassi / var_calo_totale) * 100;
       const var_totale = Number.parseFloat(var_carbo) + Number.parseFloat(var_prote) + var_grassi;
 
+      const var_grammi_nuova_carbo = var_grammi_nutri_carbo * 0.17;
+      const var_grammi_nuova_prote = (var_grammi_nutri_prote - 0.20) * 0.16;
+      const var_grammi_nuova_grassi = var_grammi_nutri_prote * 0.20;
+      const var_grammi_nuova_totale = var_grammi_nuova_carbo + var_grammi_nuova_prote + var_grammi_nuova_grassi;
+
+      const var_calorie_nuova_carbo = var_grammi_nuova_carbo * 3.5;
+      const var_calorie_nuova_prote = var_grammi_nuova_prote * 3.5;
+      const var_calorie_nuova_grassi = var_grammi_nuova_grassi * 8.5;
+      const var_calorie_nuova_totale = var_calorie_nuova_carbo + var_calorie_nuova_prote + var_calorie_nuova_grassi;
+
+      const var_perc_nuova_carbo = (var_calorie_nuova_carbo / var_calorie_nuova_totale) * 100;
+      const var_perc_nuova_prote = (var_calorie_nuova_prote / var_calorie_nuova_totale) * 100;
+      const var_perc_nuova_grassi = (var_calorie_nuova_grassi / var_calorie_nuova_totale) * 100;
+
+      const qta_dopo_gen_carne = var_grammi_nutri_prote;
+      const qta_dopo_gen_tuberi = var_grammi_nutri_carbo;
+      const qta_dopo_gen_verdure = <?php echo json_encode($verdure_1); ?>;
+
       // Update the disabled inputs
-      document.getElementById("var_calo_carbo").value = var_calo_carbo;
-      document.getElementById("var_calo_prote").value = var_calo_prote;
+      document.getElementById("var_calo_carbo").value = Number.parseInt(var_calo_carbo);
+      document.getElementById("var_calo_prote").value = Number.parseInt(var_calo_prote);
 
-      document.getElementById("var_grammi_carbo").value = var_grammi_carbo;
-      document.getElementById("var_grammi_prote").value = var_grammi_prote;
+      document.getElementById("var_grammi_carbo").value = Number.parseInt(var_grammi_carbo);
+      document.getElementById("var_grammi_prote").value = Number.parseInt(var_grammi_prote);
 
-      document.getElementById("var_grammi_nutri_carbo").value = var_grammi_nutri_carbo;
-      document.getElementById("var_grammi_nutri_prote").value = var_grammi_nutri_prote;
+      document.getElementById("var_grammi_nutri_carbo").value = Number.parseInt(var_grammi_nutri_carbo);
+      document.getElementById("var_grammi_nutri_prote").value = Number.parseInt(var_grammi_nutri_prote);
 
-      document.getElementById("var_grammi_grassi").value = var_grammi_grassi;
-      document.getElementById("var_calo_grassi").value = var_calo_grassi;
+      document.getElementById("var_grammi_grassi").value = Number.parseInt(var_grammi_grassi);
+      document.getElementById("var_grammi_totale").value = Number.parseInt(var_grammi_totale);
+      document.getElementById("var_calo_grassi").value = Number.parseInt(var_calo_grassi);
 
-      document.getElementById("var_calo_totale").value = var_calo_totale;
+      document.getElementById("var_calo_totale").value = Number.parseInt(var_calo_totale);
 
-      document.getElementById("var_grassi").value = var_grassi;
-      document.getElementById("var_totale").value = var_totale;
+      document.getElementById("var_grassi").value = Number.parseInt(var_grassi);
+      document.getElementById("var_totale").value = Number.parseInt(var_totale);
+
+      document.getElementById("var_grammi_nuova_carbo").value = Number.parseInt(var_grammi_nuova_carbo);
+      document.getElementById("var_grammi_nuova_prote").value = Number.parseInt(var_grammi_nuova_prote);
+      document.getElementById("var_grammi_nuova_grassi").value = Number.parseInt(var_grammi_nuova_grassi);
+      document.getElementById("var_grammi_nuova_totale").value = Number.parseInt(var_grammi_nuova_totale);
+
+      document.getElementById("var_calorie_nuova_carbo").value = Number.parseInt(var_calorie_nuova_carbo);
+      document.getElementById("var_calorie_nuova_prote").value = Number.parseInt(var_calorie_nuova_prote);
+      document.getElementById("var_calorie_nuova_grassi").value = Number.parseInt(var_calorie_nuova_grassi);
+      document.getElementById("var_calorie_nuova_totale").value = Number.parseInt(var_calorie_nuova_totale);
+
+      document.getElementById("var_perc_nuova_carbo").value = Number.parseInt(var_perc_nuova_carbo);
+      document.getElementById("var_perc_nuova_prote").value = Number.parseInt(var_perc_nuova_prote);
+      document.getElementById("var_perc_nuova_grassi").value = Number.parseInt(var_perc_nuova_grassi);
+
+      document.getElementById("qta_dopo_gen_carne").value = Number.parseInt(qta_dopo_gen_carne);
+      document.getElementById("qta_dopo_gen_tuberi").value = Number.parseInt(qta_dopo_gen_tuberi);
+      document.getElementById("qta_dopo_gen_verdure").value = Number.parseInt(qta_dopo_gen_verdure);
     }
+
+    window.onload = updateResults();
   </script>
 
 </body>
