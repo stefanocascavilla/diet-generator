@@ -1,7 +1,7 @@
 <?php
 require '../handlers/DatabaseHandler.php';
 require '../handlers/JsonHandler.php';
-const NEW_USER_QUERY = "INSERT INTO vet_client_user(name, surname, email, phone) VALUES (?, ?, ?, ?)";
+const NEW_USER_QUERY = "INSERT INTO diet_generator_user(name, surname, email, phone) VALUES (?, ?, ?, ?)";
 
 if ($_SERVER['REQUEST_METHOD'] != 'GET') {
     return;
@@ -39,6 +39,6 @@ $db->insert_new_user(
 );
 $db->close_connection();
 
-header("Location: https://gianlucabarbatoveterinario.it/grazie-per-dieta/");
+header("Location: TBD");
 
 ?>

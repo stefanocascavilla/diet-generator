@@ -89,6 +89,12 @@
 
   <!-- Template Main CSS File -->
   <link href="assets/css/style.css" rel="stylesheet">
+
+  <style>
+    .error {
+        border: 2px solid red;
+    }
+  </style>
 </head>
 
 <body>
@@ -181,16 +187,16 @@
 
                   <h5 class="card-title">Dettagli Dieta</h5>
 
-                  <?php
-                    if (!isset($_GET['viewer'])) {
+                  <!-- <?php
+                    #if (!isset($_GET['viewer'])) {
                   ?>
                     <a href="controllers/DietPDFController.php?dog_id=<?php echo $dog_id ?>" class="logo d-flex align-items-center">
                       <button type="button" class="btn btn-primary"><i class="bi bi-clipboard-plus me-1"></i> Scarica PDF</button>
                     </a>
                     <br>
                   <?php
-                    }
-                  ?>
+                    #}
+                  ?> -->
 
                   <div class="row">
                     <div class="col-lg-6 col-md-6 label ">Fabbisogno Giornaliero in Kcal</div>
@@ -285,284 +291,321 @@
                     $verdure_1 = ($qta_carne_1 + $tuberi_1) / 10;
                   ?>
 
-                  <table class="table">
-                    <thead>
-                      <tr>
-                        <th scope="col"></th>
-                        <th scope="col">Carboidrati</th>
-                        <th scope="col">Proteine</th>
-                        <th scope="col">Grassi</th>
-                        <th scope="col">Totale</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>Grammi</td>
-                        <td>
-                          <?php
-                            $gr_carbo = number_format(($qta_carne_1 * 0.0) + ($tuberi_1 * 0.17) + ($verdure_1 * 0.024), 1);
-                            echo $gr_carbo;
-                          ?>
-                        </td>
-                        <td>
-                          <?php
-                            $gr_prote = number_format(($qta_carne_1 * 0.16) + ($tuberi_1 * 0.02) + ($verdure_1 * 0.023), 1);
-                            echo $gr_prote;
-                          ?>
-                        </td>
-                        <td>
-                          <?php
-                            $gr_grassi = number_format(($qta_carne_1 * 0.20) + ($tuberi_1 * 0.001) + ($verdure_1 * 0.002), 1);
-                            echo $gr_grassi;
-                          ?>
-                        </td>
-                        <td>
-                          <?php echo $gr_carbo + $gr_prote + $gr_grassi ?>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>Calorie</td>
-                        <td>
-                          <?php
-                            $calorie_carbo = $gr_carbo * 3.5;
-                            echo $calorie_carbo;
-                          ?>
-                        </td>
-                        <td>
-                          <?php
-                            $calorie_prote = $gr_prote * 3.5;
-                            echo $calorie_prote;
-                          ?>
-                        </td>
-                        <td>
-                          <?php
-                            $calorie_grassi = $gr_grassi * 8.5;
-                            echo $calorie_grassi;
-                          ?>
-                        </td>
-                        <td>
-                        <?php
-                          $totale_calorie = $calorie_carbo + $calorie_prote + $calorie_grassi;
-                          echo $totale_calorie;
-                        ?>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>%</td>
-                        <td>
-                          <?php
-                            $perc_carbo = number_format(($calorie_carbo / $totale_calorie) * 100, 1);
-                            echo $perc_carbo;
-                          ?>
-                        </td>
-                        <td>
-                          <?php
-                            $perc_prote = number_format(($calorie_prote / $totale_calorie) * 100, 1);
-                            echo $perc_prote;
-                          ?>
-                        </td>
-                        <td>
-                          <?php
-                            $perc_grassi = number_format(($calorie_grassi / $totale_calorie) * 100, 1);
-                            echo $perc_grassi;
-                          ?>
-                        </td>
-                        <td>
-                          <?php
-                            if ($perc_carbo + $perc_prote + $perc_grassi >= 99) {
-                              echo 100;
-                            } else {
-                              echo $perc_carbo + $perc_prote + $perc_grassi;
-                            }
-                          ?>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
+                  <div class="row">
+                    <div class="col-lg-6 col-md-6 label">
+                      <table class="table">
+                        <thead>
+                          <tr>
+                            <th scope="col">Alimento</th>
+                            <th scope="col">Dopo Variazione</th>
+                            <th scope="col">Dieta Generata</th>
+                            <th scope="col">Carboidrati</th>
+                            <th scope="col">Proteine</th>
+                            <th scope="col">Grassi</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td>
+                              <img src="./assets/icons/meat.png" alt="Icon Description" width="30" height="30" />
+                              Carne (gr)
+                            </td>
+                            <td>
+                              <input type='number' min=0 max=10000 id='qta_dopo_gen_carne' disabled />
+                            </td>
+                            <td class="fw-bold">
+                              <?php echo intval($qta_carne_1); ?>
+                            </td>
+                            <td>0%</td>
+                            <td>16%</td>
+                            <td>20%</td>
+                          </tr>
+                          <tr>
+                            <td>
+                              <img src="./assets/icons/potato.png" alt="Icon Description" width="30" height="30" />
+                              Tuberi (gr)
+                            </td>
+                            <td>
+                              <input type='number' min=0 max=10000 id='qta_dopo_gen_tuberi' disabled />
+                            </td>
+                            <td class="fw-bold">
+                              <?php echo intval($tuberi_1); ?>
+                            </td>
+                            <td>17%</td>
+                            <td>2%</td>
+                            <td>0,1%</td>
+                          </tr>
+                          <tr>
+                            <td>
+                              <img src="./assets/icons/vegetables.png" alt="Icon Description" width="30" height="30" />
+                              Verdure (gr)
+                            </td>
+                            <td>
+                              <input type='number' min=0 max=10000 id='qta_dopo_gen_verdure' disabled />
+                            </td>
+                            <td class="fw-bold">
+                              <?php echo intval($verdure_1); ?>
+                            </td>
+                            <td>2,4%</td>
+                            <td>2,3%</td>
+                            <td>0,2%</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
 
-                  <table class="table table-borderless">
-                    <thead>
-                      <tr>
-                        <th scope="col">Alimento</th>
-                        <th scope="col">Qta Generata dopo Variazione</th>
-                        <th scope="col">Qta Generata dalla Dieta</th>
-                        <th scope="col">Carboidrati</th>
-                        <th scope="col">Proteine</th>
-                        <th scope="col">Grassi</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>Carne (gr)</td>
-                        <td>
-                          <input type='number' min=0 max=10000 id='qta_dopo_gen_carne' disabled />
-                        </td>
-                        <td class="fw-bold">
-                          <?php echo intval($qta_carne_1); ?>
-                        </td>
-                        <td>0%</td>
-                        <td>16%</td>
-                        <td>20%</td>
-                      </tr>
-                      <tr>
-                        <td>Tuberi (gr)</td>
-                        <td>
-                          <input type='number' min=0 max=10000 id='qta_dopo_gen_tuberi' disabled />
-                        </td>
-                        <td class="fw-bold">
-                          <?php echo intval($tuberi_1); ?>
-                        </td>
-                        <td>17%</td>
-                        <td>2%</td>
-                        <td>0,1%</td>
-                      </tr>
-                      <tr>
-                        <td>Verdure (gr)</td>
-                        <td>
-                          <input type='number' min=0 max=10000 id='qta_dopo_gen_verdure' disabled />
-                        </td>
-                        <td class="fw-bold">
-                          <?php echo intval($verdure_1); ?>
-                        </td>
-                        <td>2,4%</td>
-                        <td>2,3%</td>
-                        <td>0,2%</td>
-                      </tr>
-                    </tbody>
-                  </table>
+                    <div class="col-lg-6 col-md-6 label">
+                      <h4>Valori associati alla Dieta Generata</h4>
+
+                      <table class="table">
+                        <thead>
+                          <tr>
+                            <th scope="col"></th>
+                            <th scope="col">Carboidrati</th>
+                            <th scope="col">Proteine</th>
+                            <th scope="col">Grassi</th>
+                            <th scope="col">Totale</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td>Grammi</td>
+                            <td>
+                              <?php
+                                $gr_carbo = number_format(($qta_carne_1 * 0.0) + ($tuberi_1 * 0.17) + ($verdure_1 * 0.024), 1);
+                                echo $gr_carbo;
+                              ?>
+                            </td>
+                            <td>
+                              <?php
+                                $gr_prote = number_format(($qta_carne_1 * 0.16) + ($tuberi_1 * 0.02) + ($verdure_1 * 0.023), 1);
+                                echo $gr_prote;
+                              ?>
+                            </td>
+                            <td>
+                              <?php
+                                $gr_grassi = number_format(($qta_carne_1 * 0.20) + ($tuberi_1 * 0.001) + ($verdure_1 * 0.002), 1);
+                                echo $gr_grassi;
+                              ?>
+                            </td>
+                            <td>
+                              <?php echo $gr_carbo + $gr_prote + $gr_grassi ?>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>Calorie</td>
+                            <td>
+                              <?php
+                                $calorie_carbo = $gr_carbo * 3.5;
+                                echo $calorie_carbo;
+                              ?>
+                            </td>
+                            <td>
+                              <?php
+                                $calorie_prote = $gr_prote * 3.5;
+                                echo $calorie_prote;
+                              ?>
+                            </td>
+                            <td>
+                              <?php
+                                $calorie_grassi = $gr_grassi * 8.5;
+                                echo $calorie_grassi;
+                              ?>
+                            </td>
+                            <td>
+                            <?php
+                              $totale_calorie = $calorie_carbo + $calorie_prote + $calorie_grassi;
+                              echo $totale_calorie;
+                            ?>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>%</td>
+                            <td>
+                              <?php
+                                $perc_carbo = number_format(($calorie_carbo / $totale_calorie) * 100, 1);
+                                echo $perc_carbo;
+                              ?>
+                            </td>
+                            <td>
+                              <?php
+                                $perc_prote = number_format(($calorie_prote / $totale_calorie) * 100, 1);
+                                echo $perc_prote;
+                              ?>
+                            </td>
+                            <td>
+                              <?php
+                                $perc_grassi = number_format(($calorie_grassi / $totale_calorie) * 100, 1);
+                                echo $perc_grassi;
+                              ?>
+                            </td>
+                            <td>
+                              <?php
+                                if ($perc_carbo + $perc_prote + $perc_grassi >= 99) {
+                                  echo 100;
+                                } else {
+                                  echo $perc_carbo + $perc_prote + $perc_grassi;
+                                }
+                              ?>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div> 
+
+                  </div>
                   
+                  <hr />
                   <br />
-                  <h5>Variazioni Percentuali</h5>
 
-                  <table class="table">
-                    <thead>
-                      <tr>
-                        <th scope="col"></th>
-                        <th scope="col">Carboidrati</th>
-                        <th scope="col">Proteine</th>
-                        <th scope="col">Grassi</th>
-                        <th scope="col">Totale</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>Variazioni %</td>
-                        <td>
-                          <input type='number' min=0 max=10000 value=50 id='var_carbo' onChange='updateResults()' />
-                        </td>
-                        <td>
-                          <input type='number' min=0 max=10000 value=20 id='var_prote' onChange='updateResults()' />
-                        </td>
-                        <td>
-                          <input type='number' min=0 max=10000 value=46 id='var_grassi' disabled />
-                        </td>
-                        <td>
-                          <input type='number' min=0 max=10000 value=100 id='var_totale' disabled />
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>Calorie</td>
-                        <td>
-                          <input min=0 max=10000 type='number' id='var_calo_carbo' disabled />
-                        </td>
-                        <td>
-                          <input min=0 max=10000 type='number' id='var_calo_prote' disabled />
-                        </td>
-                        <td>
-                          <input min=0 max=10000 type='number' id='var_calo_grassi' disabled />
-                        </td>
-                        <td>
-                          <input min=0 max=10000 type='number' id='var_calo_totale' disabled />
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>Grammi</td>
-                        <td>
-                          <input min=0 max=10000 type='number' id='var_grammi_carbo' disabled />
-                        </td>
-                        <td>
-                          <input min=0 max=10000 type='number' id='var_grammi_prote' disabled />
-                        </td>
-                        <td>
-                          <input min=0 max=10000 type='number' id='var_grammi_grassi' disabled />
-                        </td>
-                        <td>
-                          <input min=0 max=10000 type='number' id='var_grammi_totale' disabled />
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>Grammi Nutrienti</td>
-                        <td>
-                          <input min=0 max=10000 type='number' id='var_grammi_nutri_carbo' disabled />
-                        </td>
-                        <td>
-                          <input min=0 max=10000 type='number' id='var_grammi_nutri_prote' disabled />
-                        </td>
-                        <td></td>
-                        <td></td>
-                      </tr>
-                    </tbody>
-                  </table>
+                  <div class="row">
+                    <div class="col-lg-6 col-md-6 label">
+                      <h4>Variazioni Percentuali</h4>
+                      <ol class="breadcrumb">
+                        <li>Puoi variare qui le % di carboidrati e proteine, i grassi cambieranno di conseguenza</li>
+                      </ol>
 
-                  <br />
-                  <h5>Percentuali Nuova Dieta</h5>
+                      <ol class="breadcrumb" id="tooltip_element">
+                        <li>La somma delle % delle calorie dei singoli nutrienti deve essere uguale al 100%</li>
+                        <li>Se inferiore aumenta le proteine o i carboidrati, o entrambi</li>
+                        <li>Se superiore diminuisci le proteine o i carboidrati, o entrambi</li>
+                      </ol>
 
-                  <table class="table">
-                    <thead>
-                      <tr>
-                        <th scope="col"></th>
-                        <th scope="col">Carboidrati</th>
-                        <th scope="col">Proteine</th>
-                        <th scope="col">Grassi</th>
-                        <th scope="col">Totale</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>Grammi %</td>
-                        <td>
-                          <input type='number' min=0 max=10000 id='var_grammi_nuova_carbo' disabled />
-                        </td>
-                        <td>
-                          <input type='number' min=0 max=10000 id='var_grammi_nuova_prote' disabled />
-                        </td>
-                        <td>
-                          <input type='number' min=0 max=10000 id='var_grammi_nuova_grassi' disabled />
-                        </td>
-                        <td>
-                          <input type='number' min=0 max=10000 id='var_grammi_nuova_totale' disabled />
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>Calorie</td>
-                        <td>
-                          <input type='number' min=0 max=10000 id='var_calorie_nuova_carbo' disabled />
-                        </td>
-                        <td>
-                          <input type='number' min=0 max=10000 id='var_calorie_nuova_prote' disabled />
-                        </td>
-                        <td>
-                          <input type='number' min=0 max=10000 id='var_calorie_nuova_grassi' disabled />
-                        </td>
-                        <td>
-                          <input type='number' min=0 max=10000 id='var_calorie_nuova_totale' disabled />
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>%</td>
-                        <td>
-                          <input type='number' min=0 max=10000 id='var_perc_nuova_carbo' disabled />
-                        </td>
-                        <td>
-                          <input type='number' min=0 max=10000 id='var_perc_nuova_prote' disabled />
-                        </td>
-                        <td>
-                          <input type='number' min=0 max=10000 id='var_perc_nuova_grassi' disabled />
-                        </td>
-                        <td></td>
-                      </tr>
-                    </tbody>
-                  </table>
+                      <table class="table">
+                        <thead>
+                          <tr>
+                            <th scope="col"></th>
+                            <th scope="col">Carboidrati</th>
+                            <th scope="col">Proteine</th>
+                            <th scope="col">Grassi</th>
+                            <th scope="col">Totale</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td>Variazioni %</td>
+                            <td>
+                              <input type='number' min=0 max=10000 value=33 id='var_carbo' onChange='updateResults()' />
+                            </td>
+                            <td>
+                              <input type='number' min=0 max=10000 value=17 id='var_prote' onChange='updateResults()' />
+                            </td>
+                            <td>
+                              <input type='number' min=0 max=10000 value=46 id='var_grassi' disabled />
+                            </td>
+                            <td>
+                              <input type='number' min=0 max=10000 value=100 id='var_totale' disabled />
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>Calorie</td>
+                            <td>
+                              <input min=0 max=10000 type='number' id='var_calo_carbo' disabled />
+                            </td>
+                            <td>
+                              <input min=0 max=10000 type='number' id='var_calo_prote' disabled />
+                            </td>
+                            <td>
+                              <input min=0 max=10000 type='number' id='var_calo_grassi' disabled />
+                            </td>
+                            <td>
+                              <input min=0 max=10000 type='number' id='var_calo_totale' disabled />
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>Grammi</td>
+                            <td>
+                              <input min=0 max=10000 type='number' id='var_grammi_carbo' disabled />
+                            </td>
+                            <td>
+                              <input min=0 max=10000 type='number' id='var_grammi_prote' disabled />
+                            </td>
+                            <td>
+                              <input min=0 max=10000 type='number' id='var_grammi_grassi' disabled />
+                            </td>
+                            <td>
+                              <input min=0 max=10000 type='number' id='var_grammi_totale' disabled />
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>Grammi Nutrienti</td>
+                            <td>
+                              <input min=0 max=10000 type='number' id='var_grammi_nutri_carbo' disabled />
+                            </td>
+                            <td>
+                              <input min=0 max=10000 type='number' id='var_grammi_nutri_prote' disabled />
+                            </td>
+                            <td></td>
+                            <td></td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+
+                    <div class="col-lg-6 col-md-6 label">
+                      <h4>Percentuali Nuova Dieta</h4>
+                      <ol class="breadcrumb">
+                        <li>Qui vedi le percentuali e le proporzioni della nuova dieta</li>
+                      </ol>
+
+                      <table class="table">
+                        <thead>
+                          <tr>
+                            <th scope="col"></th>
+                            <th scope="col">Carboidrati</th>
+                            <th scope="col">Proteine</th>
+                            <th scope="col">Grassi</th>
+                            <th scope="col">Totale</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td>Grammi %</td>
+                            <td>
+                              <input type='number' min=0 max=10000 id='var_grammi_nuova_carbo' disabled />
+                            </td>
+                            <td>
+                              <input type='number' min=0 max=10000 id='var_grammi_nuova_prote' disabled />
+                            </td>
+                            <td>
+                              <input type='number' min=0 max=10000 id='var_grammi_nuova_grassi' disabled />
+                            </td>
+                            <td>
+                              <input type='number' min=0 max=10000 id='var_grammi_nuova_totale' disabled />
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>Calorie</td>
+                            <td>
+                              <input type='number' min=0 max=10000 id='var_calorie_nuova_carbo' disabled />
+                            </td>
+                            <td>
+                              <input type='number' min=0 max=10000 id='var_calorie_nuova_prote' disabled />
+                            </td>
+                            <td>
+                              <input type='number' min=0 max=10000 id='var_calorie_nuova_grassi' disabled />
+                            </td>
+                            <td>
+                              <input type='number' min=0 max=10000 id='var_calorie_nuova_totale' disabled />
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>%</td>
+                            <td>
+                              <input type='number' min=0 max=10000 id='var_perc_nuova_carbo' disabled />
+                            </td>
+                            <td>
+                              <input type='number' min=0 max=10000 id='var_perc_nuova_prote' disabled />
+                            </td>
+                            <td>
+                              <input type='number' min=0 max=10000 id='var_perc_nuova_grassi' disabled />
+                            </td>
+                            <td></td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
 
                   <br/>
 
@@ -826,6 +869,17 @@
       document.getElementById("qta_dopo_gen_carne").value = Number.parseInt(qta_dopo_gen_carne);
       document.getElementById("qta_dopo_gen_tuberi").value = Number.parseInt(qta_dopo_gen_tuberi);
       document.getElementById("qta_dopo_gen_verdure").value = Number.parseInt(qta_dopo_gen_verdure);
+
+      const input = document.getElementById("var_totale");
+      const tooltipElement = document.getElementById("tooltip_element");
+
+      if (Number.parseInt(var_totale) !== 100) {
+        tooltipElement.style.display = 'block';
+        input.classList.add('error'); // Add red border
+      } else {
+        tooltipElement.style.display = 'none';
+        input.classList.remove('error'); // Remove red border
+      }
     }
 
     window.onload = updateResults();
